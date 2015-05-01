@@ -2,7 +2,6 @@
 <a href="https://codeship.com/projects/77469"><img src="https://codeship.com/projects/93cda740-d230-0132-495d-16c1124d299d/status?branch=master" /></a>
 <a href="https://codeclimate.com/github/shimonm/Elevator"><img src="https://codeclimate.com/github/shimonm/Elevator/badges/gpa.svg" /></a>
 
-Assignment for Brandeis University Cosi 105b - Software Engineering and Architecture at Scale
 
 ## Usage
 
@@ -37,8 +36,3 @@ The `Elevator` holds a list of `Passangers` and is travelling :up and :down the 
 ## Limitations
 
 As of the most recent build the `Simulation` class can only simulate one elevator in a building, but as many `floors`, `people`, and `simulations` as you want.  
-
-
-
-
-
