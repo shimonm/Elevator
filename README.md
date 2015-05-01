@@ -25,7 +25,7 @@ The `Floor` holds a queue of `People` that are waiting to board a passing `Eleva
 
 ### Elevator
 
-The `Elevator` holds a list of `Passangers` and is travelling :up and :down the `Building`. The `Elevator` can determine what elevator calls it is getting in order to travel to the `Floors` that have `People` queueing in them. 
+The `Elevator` holds a list of `Passangers` and is travelling :up and :down the `Building`. The `Elevator` can determine what elevator calls it is getting in order to travel to the `Floors` that have `People` queueing in them. When the `Elevator` has no passengers and there were no elevator calls made, the `Elevator` travels to the `resting_floor`.
 
 ## Design Decisions
 
