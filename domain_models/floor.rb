@@ -10,20 +10,24 @@ class Floor
     @exiting_people = []
 	end
 
+  # The Floor keep a queue of people that want to board the elevator
 	def add_people(person)
 		@person_queue << person
     call_elevator
 	end
 
+  # Eagerly enter the queue of people into the elevator
   def enter_elevator(person)
     @person_queue.delete(person)
     @building.remove_call(@floor_number)
   end
 
+  # Eagerly remove people from the elevator and insert in idle list
   def exit_elevator(person)
     @exiting_people << person
   end
 
+  # Call an elevator to the specific floor
   def call_elevator
     @building.call_elevator @floor_number
   end

@@ -19,6 +19,31 @@ class Elevator
     move
   end
 
+  # Load passengers onto the floor that the elevator is at
+  def load_passengers(floor)
+    person_queue = floor.person_queue
+    person_queue.reverse_each do |person|
+      if ELEV_MAX_PERSONS == person_queue.count
+        puts 'Too many passengers, please wait for the elevator to get empty'
+      else
+        @passengers << person
+        floor.enter_elevator(person)
+      end
+    end
+    unload_passengers(floor)
+  end
+
+  # Unload the passengers the wish to get off at the current floor
+  def unload_passengers(floor)
+    @passengers.reverse_each do |person|
+      if person.destination_floor == @current_floor
+        @passengers.delete(person)
+        floor.exit_elevator(person)
+      end
+    end
+  end
+
+  # Generalized move method
   def move
     determine_direction
     if @direction == :waiting
@@ -52,28 +77,7 @@ class Elevator
     end
   end
 
-  def load_passengers(floor)
-    person_queue = floor.person_queue
-    person_queue.reverse_each do |person|
-      if ELEV_MAX_PERSONS == person_queue.count
-        puts 'Too many passengers, please wait for the elevator to get empty'
-      else
-        @passengers << person
-        floor.enter_elevator(person)
-      end
-    end
-    unload_passengers(floor)
-  end
-
-  def unload_passengers(floor)
-    @passengers.reverse_each do |person|
-      if person.destination_floor == @current_floor
-        @passengers.delete(person)
-        floor.exit_elevator(person)
-      end
-    end
-  end
-
+  # Determines the direction to travel after determining the calls that were made from the different floors
   def determine_direction
     calls = get_elevator_calls
     if calls.first.nil?
@@ -83,10 +87,12 @@ class Elevator
     end
   end
 
+  # A list representation of the calls that were made to the elevator
   def get_elevator_calls
     @building.get_elevator_calls
   end
 
+  # When the has no passengers and there were no elevator calls made, the Elevator travels to the resting_floor
   def travel_to_resting_floor
     if @current_floor > ELEV_RESTING_FLOOR
       @current_floor -= 1
