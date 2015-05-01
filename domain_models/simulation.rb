@@ -14,6 +14,7 @@ class Simulation
     @tick_num = 1
 	end
 
+  # run the simulation @simulation_count times
 	def run
     create_simulation
 
@@ -24,6 +25,7 @@ class Simulation
     puts 'End of simulation'
   end
 
+  # At every clock tick print the simulation and call the clock_tick method on the building
   def clock_tick
     # %50 chance of generating a random new person
     create_people if (rand(2) == 0)
@@ -34,12 +36,14 @@ class Simulation
     @tick_num += 1
   end
 
+  # The building holds the collection of floors and elevators
   def create_simulation
     @building = Building.new
     @building.add_floors(create_floors)
     @building.add_elevators(create_elevators)
   end
 
+  # Create @number_of_floors floors
   def create_floors
     floors = []
     @number_of_floors.times do |floor_number|
@@ -47,12 +51,13 @@ class Simulation
                           building: @building,
                           call_buttons: @number_of_elevators)
     end
-
-    floors[1].add_people(Person.new(destination_floor: 2)) #  Floor 0 has one waiting passenger, destined for floor 2
-    floors[1].add_people(Person.new(destination_floor: 2)) #  Floor 4 has one waiting passenger, destined for floor 2
+    #  Floor 1 has two waiting passenger, destined for floor 2
+    floors[1].add_people(Person.new(destination_floor: 2))
+    floors[1].add_people(Person.new(destination_floor: 2))
     floors
   end
 
+  # Create @number_of_elevators elevators
   def create_elevators
     elevators = []
     @number_of_elevators.times do |elevator_number|
@@ -63,6 +68,7 @@ class Simulation
     elevators
   end
 
+  # Create people, randomly choosing the floor they are at and the destination they want to travel to
   def create_people
     rand_origin_floor = [*0...@number_of_floors].sample
     rand_dest_floor = ([*0...@number_of_floors]-[rand_origin_floor]).sample
@@ -70,6 +76,7 @@ class Simulation
     @building.floors[rand_origin_floor].add_people(Person.new(destination_floor:rand_dest_floor))
   end
 
+  # Printing a graphical representation of simulation tick
   def print_simulation
     puts "Tick #{@tick_num}:"
     puts "Floor  Elevator    Q   Done"
